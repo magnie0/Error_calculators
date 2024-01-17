@@ -1,0 +1,62 @@
+{% extends "layout.html" %}
+{% block content %}
+<div class="content-section">
+    <form method="POST" action="/" id="form_id" > {# action="" means it will go to the same rout #}
+        {{  form.hidden_tag() }}
+        <fieldset class="form-group">
+            <legend class="border-bottom mb-4"> {# for regester form, margin bottom with a margin of 4 #}
+                Podaj dane do obliczania maksymalnego standardowego błędu oszacowania
+            </legend>
+            <div class="form-group">
+                {{form.z.label(class="form-control-label") }}
+            </div>
+            <div class="form-group">
+                {{form.z(class="form-control form-control-lg") }}
+            </div>
+            <div class="form-group">
+                {{form.p.label(class="form-control-label") }}
+            </div>
+            <div class="form-group">
+                {{form.p(class="form-control form-control-lg") }}
+            </div>
+            <div class="form-group">
+                {{form.n.label(class="form-control-label") }}
+            </div>
+            <div class="form-group">
+                {{form.n(class="form-control form-control-lg") }}
+            </div>
+        </fieldset>
+        <div class="form-group">
+            {{form.submit(class="btn") }}
+        </div>
+        {# TODO https://stackoverflow.com/questions/71285841/submit-flask-form-without-re-rendering-the-page#}
+        {# https://www.geeksforgeeks.org/flask-form-submission-without-page-reload/ #}
+        
+    </form>
+    <div id="result_div"></div>
+    <script src="https://code.jquery.com/jquery-3.5.1.js"
+          integrity="sha256-QWo7LDvxbWT2tbbQ97B53yJnYU3WhH/C8ycbRAkjPDc="
+          crossorigin="anonymous"></script>
+ 
+    <script type="text/javascript">
+        $(document).on('submit','#form_id',function(e)
+                    {
+        e.preventDefault();
+        $.ajax({
+            type:'POST',
+            url:'/maxStandardError',
+            data:$('#form_id').serialize(),
+            success:function(data)
+            {
+                if ('error' in data) {
+                    $('#result_div').text('maksymalny standardowy błąd oszacowania w procentach: ' + data.error);
+                } else {
+                    $('#result_div').text('Error: Form validation failed');
+                }
+                
+            }
+        })
+        });
+    </script>
+</div>
+{% endblock content %}

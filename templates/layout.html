@@ -1,0 +1,22 @@
+{# comments in jnja2 in html templates#}
+{# https://www.youtube.com/watch?v=QnDWIZuWYW0 --learned from here #}
+{# info from https://gist.github.com/Atlas7/d35eed7efb4e085c4343 #}
+{# {% %} are for getting thing from python and doing with python#}
+{# {{ }} getting value from python #}
+<!DOCTYPE html>
+<html>
+<head>
+    {% if title %} 
+        <title> {{title}}</title>
+    {%  else %}
+        <title> Default Title </title>
+    {% endif %}
+</head>
+<body><form action=></form>
+    <button type="button" onclick="window.location.href='{{ url_for( 'maxStandardErrorFunction'  ) }}';">maksymalny standardowy błąd szacowania</button>
+    <button type="button" onclick="window.location.href='{{ url_for( 'maxStandardErrorFunctionSimplified'  ) }}';">uproszczony błąd szacowania</button>
+    <button type="button" onclick="window.location.href='{{ url_for( 'fpcFunction'  ) }}';">efekt skończonej populacji</button>
+    <button type="button" onclick="window.location.href='{{ url_for( 'lissowskiFunction'  ) }}';">pseudprzedział ufności Grzegorza Lissowskiego    </button>
+    {% block content %}{% endblock %}
+</body>
+</html>
